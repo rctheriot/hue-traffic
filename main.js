@@ -7,14 +7,20 @@
  * 
  * July 14th 2017 Ryan Theriot
  */
-const localIP = `192.168.86.32`;
-const userID = `OUKcxjFxKwiEtMriHrVDfpv3SFOBk72LS9kH-xon`;
-const trafficURL = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=4911a+mokapea+pl+ewa+beach&wp.1=University%20of%20Hawaii%20at%20Manoa&avoid=minimizeTolls&key=AnczajqYYh4VoTuTW-aqhiIJ8bise3nOOHyNoRCfd2SQvJcnIcJm0GIvJMfUMrwV";
+const hueIP = '192.168.86.32';
+const hueID = 'OUKcxjFxKwiEtMriHrVDfpv3SFOBk72LS9kH-xon';
 const lightNumber = 3;
-const lightURL = `http://${localIP}/api/${userID}/lights/${lightNumber}/state`
+const lightURL = `http://${hueIP}/api/${hueID}/lights/${lightNumber}/state`
+
+const bingAPI = 'AnczajqYYh4VoTuTW-aqhiIJ8bise3nOOHyNoRCfd2SQvJcnIcJm0GIvJMfUMrwV';
+const origin = '4911a+mokapea+pl+ewa+beach';
+const destination = 'University%20of%20Hawaii%20at%20Manoa';
+const trafficURL = `http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=${origin}&wp.1=${destination}&avoid=minimizeTolls&key=${bingAPI}`;
+
 let currentTravelTime = 0;
 let minTravelTime = 45 * 60; //45Mins Traffic
 let maxTravelTime = 90 * 60; //90 Mins Traffic
+let updateInterval = 20 * 1000; //In seconds
 let brightness = 150;
 let haveData = false;
 
@@ -32,7 +38,7 @@ const maxColorVal = {
 
 //Get the data and set an interval of 20 seconds
 getTrafficToWork();
-setInterval(getTrafficToWork, 5000);
+setInterval(getTrafficToWork, updateInterval);
 document.getElementById("minTime").innerHTML = minTravelTime / 60;
 document.getElementById("maxTime").innerHTML = maxTravelTime / 60;
 document.getElementById("brightness").innerHTML = brightness;
@@ -77,7 +83,7 @@ function calcColorPt(pt1X, pt1Y, pt2X, pt2Y, per) {
 //Set the current travel time
 function setTravelTime(result) {
   currentTravelTime = result.resourceSets["0"].resources["0"].travelDurationTraffic;
-  document.getElementById("travelTime").innerHTML = (currentTravelTime/60).toFixed(0);
+  document.getElementById("travelTime").innerHTML = (currentTravelTime / 60).toFixed(0);
 }
 
 function changeMin(value) {
@@ -103,6 +109,7 @@ function setUpdateTime() {
   var time = pad(today.getHours()) + ":" + pad(today.getMinutes()) + ":" + pad(today.getSeconds());
   document.getElementById("updateTime").innerHTML = time + ' ' + date;
 }
+
 function pad(n) {
-    return (n < 10) ? ("0" + n) : n;
+  return (n < 10) ? ("0" + n) : n;
 }

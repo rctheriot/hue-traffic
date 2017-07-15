@@ -10,6 +10,10 @@
     <body>
         <h1>Commute Time to Work:  <span id="travelTime"></span></h1>
     </body>
+    <h2>Max Traffic time: <span id="maxTime">120</span></h2>
+    <input type="range" min="0" max="200" value="120" step="1" onchange="changeMax(this.value)"/>
+    <h2>Min Traffic time: <span id="minTime">45</span></h2>
+    <input  type="range" min="0" max="200" value="45" step="1" onchange="changeMin(this.value)"/>
 
 <script src="./main.js"></script>
 </html>

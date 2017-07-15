@@ -10,8 +10,8 @@ const localIP = `192.168.86.32`;
 const userID = `OUKcxjFxKwiEtMriHrVDfpv3SFOBk72LS9kH-xon`;
 const trafficURL = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=4911a+mokapea+pl+ewa+beach&wp.1=University%20of%20Hawaii%20at%20Manoa&avoid=minimizeTolls&key=AnczajqYYh4VoTuTW-aqhiIJ8bise3nOOHyNoRCfd2SQvJcnIcJm0GIvJMfUMrwV";
 let currentTravelTime = 0;
-const minTravelTime = 45 * 60; //45Mins Traffic
-const maxTravelTime = 90 * 60; //90 Mins Traffic
+let minTravelTime = 45 * 60; //45Mins Traffic
+let maxTravelTime = 90 * 60; //90 Mins Traffic
 
 //Green on CIE Chart
 const minColorVal = {
@@ -51,18 +51,18 @@ function calcColorPt(pt1X, pt1Y, pt2X, pt2Y, per) {
 }
 
 //Get the traffic to work from
-function getTrafficToWork(request) {
+function getTrafficToWork() {
   $.ajax({
-    url: request,
+    url: trafficURL,
     dataType: "jsonp",
     jsonp: "jsonp",
     success: function (r) {
 
       setTravelTime(r);
       setColorWithData();
+      console.log("Updated");
     },
     error: function (e) {
-            console.log(e);
       setColorNoData();
     }
   });
@@ -76,5 +76,15 @@ function setTravelTime(result) {
 }
 
 //Get the data and set an interval of 20 seconds
-getTrafficToWork(trafficURL);
-setInterval(getTrafficToWork(trafficURL), 5000);
+getTrafficToWork();
+setInterval(getTrafficToWork, 5000);
+
+function changeMin(value) {
+  minTravelTime = value * 60;
+  document.getElementById("minTime").innerHTML = minTravelTime / 60;
+}
+
+function changeMax(value) {
+  maxTravelTime = value * 60;
+  document.getElementById("maxTime").innerHTML = maxTravelTime / 60;
+}

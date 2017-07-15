@@ -8,7 +8,7 @@
  */
 const localIP = `192.168.86.32`;
 const userID = `OUKcxjFxKwiEtMriHrVDfpv3SFOBk72LS9kH-xon`;
-const trafficURL = `http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=4911a+mokapea+pl+ewa+beach&wp.1=University%20of%20Hawaii%20at%20Manoa&avoid=minimizeTolls&key=AnczajqYYh4VoTuTW-aqhiIJ8bise3nOOHyNoRCfd2SQvJcnIcJm0GIvJMfUMrwV`;
+const trafficURL = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=4911a+mokapea+pl+ewa+beach&wp.1=University%20of%20Hawaii%20at%20Manoa&avoid=minimizeTolls&key=AnczajqYYh4VoTuTW-aqhiIJ8bise3nOOHyNoRCfd2SQvJcnIcJm0GIvJMfUMrwV";
 let currentTravelTime = 0;
 const minTravelTime = 45 * 60; //45Mins Traffic
 const maxTravelTime = 90 * 60; //90 Mins Traffic
@@ -57,11 +57,12 @@ function getTrafficToWork(request) {
     dataType: "jsonp",
     jsonp: "jsonp",
     success: function (r) {
+
       setTravelTime(r);
       setColorWithData();
-      //setColorNoData();
     },
     error: function (e) {
+            console.log(e);
       setColorNoData();
     }
   });
@@ -70,10 +71,10 @@ function getTrafficToWork(request) {
 //Set the current travel time
 function setTravelTime(result) {
   currentTravelTime = result.resourceSets["0"].resources["0"].travelDurationTraffic;
-  var text = currentTravelTime / 60;
+  let text = currentTravelTime / 60;
   document.getElementById("travelTime").innerHTML = text.toFixed(0);
 }
 
 //Get the data and set an interval of 20 seconds
 getTrafficToWork(trafficURL);
-setInterval(getTrafficToWork, 20000);
+setInterval(getTrafficToWork(trafficURL), 5000);

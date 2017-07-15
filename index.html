@@ -1,19 +1,23 @@
-
 <!DOCTYPE html>
 <html>
-    
-    <head>
-        <title>Commute Time</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    </head>
 
-    <body>
-        <h1>Commute Time to Work:  <span id="travelTime"></span></h1>
-    </body>
-    <h2>Max Traffic time: <span id="maxTime">120</span></h2>
-    <input type="range" min="0" max="200" value="120" step="1" onchange="changeMax(this.value)"/>
-    <h2>Min Traffic time: <span id="minTime">45</span></h2>
-    <input  type="range" min="0" max="200" value="45" step="1" onchange="changeMin(this.value)"/>
+<head>
+    <title>Commute Time</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Commute Time to Work: <span id="travelTime"></span></h1>
+    <h3>Updated: <span id="updateTime"></span></h3>
+    <h2>Max Traffic time: <span id="maxTime"></span></h2>
+    <input type="range" min="0" max="200" value="120" step="1" onchange="changeMax(this.value)" />
+    <h2>Min Traffic time: <span id="minTime"45</span></h2>
+    <input type="range" min="0" max="200" value="45" step="1" onchange="changeMin(this.value)" />
+    <h2>Brightness: <span id="brightness"></span></h2>
+    <input type="range" min="0" max="254" value="150" step="1" onchange="setBrightness(this.value)" />
+</body>
+
 
 <script src="./main.js"></script>
+
 </html>
